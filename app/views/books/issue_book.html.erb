@@ -1,0 +1,10 @@
+<!-- app/views/books/issue_book.html.erb -->
+<h2>Issue Book</h2>
+
+<p>Are you sure you want to issue the book "<%= @book.title %>"?</p>
+
+<%= form_tag issue_book_book_path(@book), method: :post do %>
+  <%= submit_tag 'Yes, Issue Book', class: 'btn btn-primary' %>
+<% end %>
+
+<%= link_to 'Cancel', @book, class: 'btn btn-secondary' %>

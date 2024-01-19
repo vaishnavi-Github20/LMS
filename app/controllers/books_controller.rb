@@ -57,6 +57,43 @@ class BooksController < ApplicationController
     end
   end
 
+  def issue_book
+    @book = Book.find(params[:id])
+    if current_user && current_user.role.eql?('student')
+      # Render the new view for book issuance
+      render 'issue_book'
+    else
+      redirect_to @book, alert: 'You are not authorized to issue books.'
+    end
+    # Send the email
+  BookMailer.issue_confirmation(@book, current_user).deliver_now
+  # Redirect to the confirmation page
+  # redirect_to root_path
+  end
+
+  def confirm_issue_book
+    @book = Book.find(params[:id])
+    # Implement book issuance logic here
+    # You can update the book's status, create a BookIssue record, etc.
+    # Example:
+    BookIssue.create(book: @book, user: current_user, due_date: Time.now + 14.days)
+    # Send email notification
+    BookMailer.book_due_notification(current_user, @book).deliver_later(wait_until: 2.days.from_now)
+    # Redirect or render as needed
+    redirect_to @book, notice: 'Book issued successfully.'
+
+    BookIssue.create(book: @book, user: current_user, due_date: Time.now + 14.days)
+
+  # Schedule email reminder
+  DueDateReminderJob.set(wait_until: (Time.now + 12.days).beginning_of_day).perform_later(@book, current_user)
+  end
+
+
+#   BookIssue.create(book: @book, user: current_user, due_date: Time.now + 14.days)
+
+# # Schedule email reminder
+#   DueDateReminderJob.set(wait_until: (Time.now + 12.days).beginning_of_day).perform_later(@book, current_user)
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_book

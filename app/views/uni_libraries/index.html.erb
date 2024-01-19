@@ -11,4 +11,6 @@
   <% end %>
 </div>
 
-<%= link_to "New uni library", new_uni_library_path %>
+<% if current_user && (current_user.role.eql?('admin')) %>
+  <%= link_to "New uni library", new_uni_library_path %>
+<% end %>
