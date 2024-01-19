@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @uni_library %>
+
+<div>
+  <%= link_to "Edit this uni library", edit_uni_library_path(@uni_library) %> |
+  <%= link_to "Back to uni libraries", uni_libraries_path %>
+
+  <%= button_to "Destroy this uni library", @uni_library, method: :delete %>
+</div>

@@ -1,0 +1,42 @@
+<%= form_with(model: uni_library) do |form| %>
+  <% if uni_library.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(uni_library.errors.count, "error") %> prohibited this uni_library from being saved:</h2>
+
+      <ul>
+        <% uni_library.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, style: "display: block" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
+    <%= form.label :university, style: "display: block" %>
+    <%= form.text_field :university %>
+  </div>
+
+  <div>
+    <%= form.label :location, style: "display: block" %>
+    <%= form.text_field :location %>
+  </div>
+
+  <div>
+    <%= form.label :no_of_books, style: "display: block" %>
+    <%= form.number_field :no_of_books %>
+  </div>
+
+  <div>
+    <%= form.label :overdue_fine, style: "display: block" %>
+    <%= form.text_field :overdue_fine %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,2 @@
+class UniLibrary < ApplicationRecord
+end
